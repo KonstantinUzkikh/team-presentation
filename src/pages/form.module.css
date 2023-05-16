@@ -1,9 +1,21 @@
 .formPage {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
   background: #F5F5F5;
+}
+
+.headerStyle {
+  align-items: center;
+}
+
+.formBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .form {
@@ -19,22 +31,29 @@
   box-sizing: border-box;
 }
 
-.inputGroup {
+.email {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+}
+
+.inputBox {
   display: flex;
   flex-direction: column;
 }
 
 .inputStyle {
+  width: 100%;
   height: 48px;
   margin: 8px 0 4px;
-  padding: 12px 8px 12px 16px;
+  padding: 15px 7px 15px 15px;
   background: #F8F8F8;
   border: 1px solid #F8F8F8;
   border-radius: 8px;
   box-sizing: border-box;
 }
 
-.inputErrorStyle {
+.inputStyle:invalid {
   border: 1px solid #FF6161;
 }
 
@@ -47,16 +66,28 @@
   color: #FF6161;
 }
 
-.name {
-
+.inputGroup {
+  display: flex;
+  position: relative;
 }
 
-.email {
-
+.inputPassStyle {
+  padding-right: 39px;
 }
 
-.pass {
+.icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  padding: 12px 8px;
+  margin: 8px 0 4px;
+  cursor: pointer;
+}
 
+.icon:hover {
+  transform:scale(1.3);
 }
 
 .buttonGroup {
@@ -64,25 +95,6 @@
   justify-content: space-between;
   align-items: center;
   margin: 32px 0 0;
-}
-
-.buttonSignUp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 48px;
-  background: transparent;
-  border: 1px solid #512689;
-  border-radius: 8px;
-  box-sizing: border-box;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-}
-
-.buttonSignUp:hover {
-  font-weight: 600;
-  box-shadow: 5px 5px 7px rgba(51, 51, 51, 0.5);
 }
 
 @media screen and (max-width: 900px) {

@@ -1,12 +1,23 @@
-import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from '../stor/hooks-store';
+
+import ButtonHeader from '../components/button-header/button-header';
+import ButtonPage from '../components/button-page/button-page';
+import { isLogined, usersOnPageLimit } from '../utils';
+
+import { TUser } from '../services/types-data';
+import { decreasePage, increasePage, userToggleLike } from '../stor/actions';
 
 import pageLayout from './page.module.css';
 import teamLayout from './team.module.css'
 
-import avatar from '../images/Artur.svg';
-import like from '../images/like-disactive.svg';
-import ButtonHeader from '../components/button-header/button-header';
+import likeActive from '../images/like-active.svg';
+import likeDisactive from '../images/like-disactive.svg';
+import chevronDown from '../images/Colebemis-Feather-Chevron-down.svg';
+import chevronUp from '../images/Colebemis-Feather-Chevron-up.svg';
 
 const TeamPresentation: FC = () => {
   return (
@@ -20,28 +31,64 @@ const TeamPresentation: FC = () => {
   );
 }
 
-const ProfileCard: FC = () => {
+const ProfileCard: FC<{ user: TUser }> = ({ user }) => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  let style: string = '';
+  const { id, first_name, last_name, avatar, like } = user;
 
-  const name = 'Артур Королёв';
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const goLink = useCallback(() => { navigate(`/team/${id}`) }, []);
+
+  const onToggle = () => dispatch(userToggleLike(id)); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <button type="button" className={teamLayout.profileCard} onClick={() => navigate('/team/:22')} >
-      <img src={avatar} alt="Аватар" className={teamLayout.avatar} />
-      <h3 className={pageLayout.h3Style}>
-        {name}
-      </h3>
-      <div className={teamLayout.boxLike} >
-        <img src={like} alt="иконка лайка" className={`${teamLayout.like} ${style}`} />
+    <div onClick={goLink} className={teamLayout.profileCardBox}>
+      <div className={teamLayout.profileCard} >
+        <img src={avatar} alt="Аватар" className={teamLayout.avatar} />
+        <h3 className={pageLayout.h3Style}>
+          {`${first_name} ${last_name}`}
+        </h3>
+        <div className={teamLayout.boxLike} onClick={(evt) => evt.stopPropagation()} >
+          {like
+            ? <img src={likeActive} alt="иконка лайка" onClick={onToggle} className={teamLayout.like} />
+            : <img src={likeDisactive} alt="иконка лайка" onClick={onToggle} className={teamLayout.like} />
+          }
+        </div>
       </div>
-    </button>
+    </div>
   );
 }
 
 const TeamPage: FC = () => {
+
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  if (!isLogined()) return <Navigate to="/login" state={{ from: location }} />;
+
+  const { currentPage, users } = useSelector(state => state.users);
+  const [usersOnPage, setUsersOnPage] = useState<TUser[]>([]);
+
+  const [isNoLikes, setIsNoLikesset] = useState<number>(1);
+
+  useEffect(() => { (isNoLikes === 3) && sessionStorage.removeItem('likeIds') }, [isNoLikes]);
+
+  useEffect(() => {
+    setUsersOnPage(
+      users.filter((it, index) =>
+        (index < currentPage * usersOnPageLimit) && (index >= (currentPage - 1) * usersOnPageLimit))
+    );
+
+      const arr = users.filter(it => it.like === true)
+      if (arr.length !== 0) {
+        sessionStorage.setItem('likeIds', JSON.stringify(arr.map(it => it.id)));
+        setIsNoLikesset(2);
+
+      } else (isNoLikes !== 1) && setIsNoLikesset(3);
+
+  }, [currentPage, users]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -54,21 +101,28 @@ const TeamPage: FC = () => {
           <TeamPresentation />
         </div>
       </header>
-      <div className={`${pageLayout.page} ${teamLayout.mainContentStyle}`}>
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-        <ProfileCard />
-      </div>
+      {currentPage > 0
+        ? <div className={pageLayout.page}>
+          <div className={teamLayout.grid}>
+            {usersOnPage.map((it: TUser) => <ProfileCard user={it} key={it.id} />)}
+          </div>
+          <div className={teamLayout.buttonGroup}>
+            <ButtonPage
+              srcIcon={chevronUp}
+              disabled={currentPage === 1}
+              onClick={() => dispatch(decreasePage())}
+            />
+            <ButtonPage
+              srcIcon={chevronDown}
+              disabled={!(currentPage < Math.ceil(users.length / usersOnPageLimit))}
+              onClick={() => dispatch(increasePage())}
+            />
+          </div>
+        </div>
+        : <div className={`${pageLayout.page} ${teamLayout.noUsers}`}>
+          <p className={pageLayout.h3Style}>Массив зарегистрированных пользователей пуст.</p>
+        </div>
+      }
     </>
   );
 }

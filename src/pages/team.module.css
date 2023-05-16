@@ -1,6 +1,5 @@
 .headerStyle {
   height: 265px;
-  padding: 32px 80px;
 }
 
 .team {
@@ -10,12 +9,16 @@
   gap: 16px;
 }
 
+.profileCardBox{
+  display: flex;
+  justify-content: center;
+}
+
 .profileCard {
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
-  justify-self: center;
   width: 305px;
   height: 263px;
   gap: 16px;
@@ -37,6 +40,7 @@
 .avatar {
   width: 124px;
   height: 124px;
+  border-radius: 50%;
 }
 
 .boxLike {
@@ -60,7 +64,11 @@
   background: transparent;
 }
 
-.mainContentStyle {
+.like:hover {
+  transform:scale(1.5);
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(305px,1fr));
   gap: 20px 20px;
@@ -71,15 +79,33 @@
   box-sizing: border-box;
 }
 
+.buttonGroup {
+  display: flex;
+  align-self: flex-end;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.noUsers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 900px) {
 
   .headerStyle {
     height: 281px;
-    padding: 23px 27px;
+    /*padding: 23px 27px;*/
   }
 
-  .mainContentStyle {
+  .grid {
     padding: 32px 35px 32px;
   }
 
-}
+  .noUsers {
+    padding: 16px;
+  }
+
+  }

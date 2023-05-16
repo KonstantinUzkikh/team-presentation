@@ -8,18 +8,22 @@
   box-sizing: border-box;
   border: 1px solid #F8F8F8;
   border-radius: 8px;
-  cursor: pointer;
 }
 
 .button:hover {
   font-weight: 600;
   box-shadow: 5px 5px 7px rgba(248, 248, 248, 1);
+  cursor: pointer;
 }
 
 .buttonBlank {
   border: none;
 }
 
+.buttonBlank:hover {
+  box-shadow: 5px 5px 7px rgba(248, 248, 248, 0);
+  cursor:auto;
+}
 .icon {
   display: none;
   height: 18px;

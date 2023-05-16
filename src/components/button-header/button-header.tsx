@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import buttonHeaderLayout from './button-header.module.css';
+import { deleteCookies } from '../../utils';
 
 import exitIcon from '../../images/exit.svg';
 import backIcon from '../../images/back.svg';
@@ -10,12 +11,11 @@ const ButtonHeader: FC<{ content: 'back' | 'exit' | 'none' }> = ({ content }) =>
 
   const navigate = useNavigate();
 
-  const onBack = () => {
-    navigate('/team');
-  };
+  const onBack = () => navigate(-1);
 
   const onExit = () => {
-    navigate('/login');
+    deleteCookies();
+    navigate('/');
   };
 
   let title: string = '';
