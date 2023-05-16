@@ -22,6 +22,7 @@
   },
   "include": [
     "src",
-    "declarations/react-app-env.d.ts"
+    "declarations/react-app-env.d.ts",
+    "declarations/svg.d.ts"
   ]
 }
