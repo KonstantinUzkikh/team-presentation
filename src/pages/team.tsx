@@ -71,9 +71,9 @@ const TeamPage: FC = () => {
   const { currentPage, users } = useSelector(state => state.users);
   const [usersOnPage, setUsersOnPage] = useState<TUser[]>([]);
 
-  const [isNoLikes, setIsNoLikesset] = useState<number>(1);
+  const [likesState, setLikesState] = useState<'init' | 'likes' | 'empty'>('init');
 
-  useEffect(() => { (isNoLikes === 3) && sessionStorage.removeItem('likeIds') }, [isNoLikes]);
+  useEffect(() => { (likesState === 'empty') && sessionStorage.removeItem('likeIds') }, [likesState]);
 
   useEffect(() => {
     setUsersOnPage(
@@ -81,12 +81,11 @@ const TeamPage: FC = () => {
         (index < currentPage * usersOnPageLimit) && (index >= (currentPage - 1) * usersOnPageLimit))
     );
 
-      const arr = users.filter(it => it.like === true)
-      if (arr.length !== 0) {
-        sessionStorage.setItem('likeIds', JSON.stringify(arr.map(it => it.id)));
-        setIsNoLikesset(2);
-
-      } else (isNoLikes !== 1) && setIsNoLikesset(3);
+    const arr = users.filter(it => it.like === true)
+    if (arr.length !== 0) {
+      sessionStorage.setItem('likeIds', JSON.stringify(arr.map(it => it.id)));
+      setLikesState('likes');
+    } else (likesState !== 'init') && setLikesState('empty');
 
   }, [currentPage, users]);  // eslint-disable-line react-hooks/exhaustive-deps
 

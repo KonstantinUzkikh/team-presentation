@@ -1,6 +1,5 @@
 import { FC, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-//import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { useDispatch } from '../../stor/hooks-store';
 import { getUsersThunk } from '../../stor/thunks';
@@ -20,7 +19,7 @@ const App: FC = () => {
   return (
     <>
       <Routes >
-        <Route index path="/" element={<LoginPage />} />
+        <Route index path="/" element={<Navigate to={'/login'} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/team" element={<TeamPage />} />

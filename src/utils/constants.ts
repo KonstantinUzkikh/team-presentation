@@ -15,4 +15,5 @@ export const initUser ={
     like: false
 }
 
+// Количество карточек пользователей, отображаемое на одной странице при пагинации
 export const usersOnPageLimit = 8;

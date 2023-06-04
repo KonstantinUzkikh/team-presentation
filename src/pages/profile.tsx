@@ -36,7 +36,7 @@ const ProfilePage: FC = () => {
   if (!isLogined()) return <Navigate to="/login" state={{ from: location }} />;
 
   const navigate = useNavigate();
-  const id = useParams().id;
+  const { id } = useParams();
 
   const { isLoadUsers, users } = useSelector(state => state.users);
 

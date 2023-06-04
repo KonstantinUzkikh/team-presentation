@@ -1,15 +1,15 @@
 import { AppDispatch, AppThunk } from '../types-store';
 import { apiFlagDown, apiFlagUp, apiError, getLoginSuccess } from '../actions';
-import { writeToken, writePassword } from '../../utils';
-import { getLogin } from '../../services/get-data';
-import type { TInputValues } from '../../hooks/useFormAndValidation';
+import { writeToken, writePassword, endPoints } from '../../utils';
+import { getProfile } from '../../services/get-data';
+import type { TValues } from '../../hooks/useFormAndValidation';
 import { TLoginResponse, TUser } from '../../services/types-data';
 
 export const getLoginThunk = (
-  userData: TInputValues, user: TUser, goPath: () => void
+  userData: TValues, user: TUser, goPath: () => void
 ): AppThunk => (dispatch: AppDispatch) => {
   dispatch(apiFlagUp());
-  getLogin(userData)
+  getProfile(endPoints.login, userData)
     .then((res: TLoginResponse) => {
       writeToken(res.token);
       writePassword(userData.password);
