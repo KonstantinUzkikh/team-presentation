@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.20b3d27a.css",
-    "main.js": "./static/js/main.82de4e3c.js",
+    "main.css": "./static/css/main.b5daaba3.css",
+    "main.js": "./static/js/main.4a2368ed.js",
     "static/media/Roboto-Regular.ttf": "./static/media/Roboto-Regular.160d7a6ac26376e5e977.ttf",
     "static/media/exit.svg": "./static/media/exit.e3febb0a52b2929a9f47445fe0a2301d.svg",
     "static/media/Pictogrammers-Material-Light-Eye-off.svg": "./static/media/Pictogrammers-Material-Light-Eye-off.8daa7e54db0d58f361c8d1c4e4309d97.svg",
@@ -14,11 +14,11 @@
     "static/media/like-disactive.svg": "./static/media/like-disactive.061e171d2a52e699ffb3579ec85fbc42.svg",
     "static/media/Colebemis-Feather-Chevron-up.svg": "./static/media/Colebemis-Feather-Chevron-up.187f95c178dd9825d53778c453fa0458.svg",
     "static/media/Colebemis-Feather-Chevron-down.svg": "./static/media/Colebemis-Feather-Chevron-down.29d0b3c4d484792ab219ad165002bf47.svg",
-    "main.20b3d27a.css.map": "./static/css/main.20b3d27a.css.map",
-    "main.82de4e3c.js.map": "./static/js/main.82de4e3c.js.map"
+    "main.b5daaba3.css.map": "./static/css/main.b5daaba3.css.map",
+    "main.4a2368ed.js.map": "./static/js/main.4a2368ed.js.map"
   },
   "entrypoints": [
-    "static/css/main.20b3d27a.css",
-    "static/js/main.82de4e3c.js"
+    "static/css/main.b5daaba3.css",
+    "static/js/main.4a2368ed.js"
   ]
 }
